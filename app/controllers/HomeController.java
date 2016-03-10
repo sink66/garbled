@@ -21,7 +21,7 @@ public class HomeController extends Controller {
     
     public Result show() {
     	
-    	//　文字化けします
+    	//　日本語が文字化けします
     	play.Logger.info(request().body().asFormUrlEncoded().get("name")[0]);
     	
 		Form<TestForm> reqData = formFactory.form(TestForm.class).bindFromRequest();
@@ -29,7 +29,7 @@ public class HomeController extends Controller {
 			return badRequest();
 		}
 		
-		// 文字化けします
+		// 日本語が文字化けします
 		play.Logger.info(reqData.get().name);
 		
         return ok(show.render(reqData.get()));

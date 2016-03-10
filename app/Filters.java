@@ -1,5 +1,6 @@
 import javax.inject.*;
 import play.*;
+import play.filters.csrf.CSRFFilter;
 import play.mvc.EssentialFilter;
 import play.http.HttpFilters;
 import play.mvc.*;
@@ -24,11 +25,13 @@ public class Filters implements HttpFilters {
 
     private final Environment env;
     private final EssentialFilter exampleFilter;
+    private final CSRFFilter csrfFilter;
 
     @Inject
-    public Filters(Environment env, ExampleFilter exampleFilter) {
+    public Filters(Environment env, ExampleFilter exampleFilter, CSRFFilter csrfFilter) {
         this.env = env;
         this.exampleFilter = exampleFilter;
+        this.csrfFilter = csrfFilter;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class Filters implements HttpFilters {
       // we're running in production or test mode then don't use any
       // filters at all.
       if (env.mode().equals(Mode.DEV)) {
-          return new EssentialFilter[] { exampleFilter };
+          return new EssentialFilter[] { exampleFilter, csrfFilter.asJava() };
       } else {
          return new EssentialFilter[] {};      
       }

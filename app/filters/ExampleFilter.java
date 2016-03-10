@@ -37,6 +37,7 @@ public class ExampleFilter extends Filter {
 
         return next.apply(requestHeader).thenApplyAsync(
             result -> result.withHeader("X-ExampleFilter", "foo"),
+            //result -> result.withHeader("Content-type", "charset=utf-8"),
             exec
         );
     }
